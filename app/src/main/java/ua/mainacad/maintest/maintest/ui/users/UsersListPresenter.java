@@ -1,6 +1,7 @@
 package ua.mainacad.maintest.maintest.ui.users;
 
 import android.support.annotation.NonNull;
+import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,7 +14,8 @@ import ua.mainacad.maintest.maintest.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-class UsersListPresenter extends MvpPresenter<IUserListView> {
+@InjectViewState
+public class UsersListPresenter extends MvpPresenter<IUserListView> {
 
 
     private List<User> mUsers = new ArrayList<>();
