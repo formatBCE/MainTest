@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import ua.mainacad.maintest.maintest.R;
+import ua.mainacad.maintest.maintest.ui.posts.PostsListFragment;
 import ua.mainacad.maintest.maintest.ui.users.UsersListFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_users) {
             setFragment(new UsersListFragment());
+        } else if (id == R.id.nav_posts) {
+            setFragment(new PostsListFragment());
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
