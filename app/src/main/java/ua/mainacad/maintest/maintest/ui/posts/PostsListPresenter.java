@@ -1,6 +1,7 @@
 package ua.mainacad.maintest.maintest.ui.posts;
 
 import android.support.annotation.NonNull;
+import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -8,13 +9,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import ua.mainacad.maintest.maintest.MyApp;
 import ua.mainacad.maintest.maintest.api.IPostsApi;
-import ua.mainacad.maintest.maintest.api.IUsersApi;
 import ua.mainacad.maintest.maintest.model.Post;
-import ua.mainacad.maintest.maintest.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
+@InjectViewState
 public class PostsListPresenter extends MvpPresenter<IPostListView> {
     private List<Post> mPosts = new ArrayList<>();
 
@@ -36,5 +35,11 @@ public class PostsListPresenter extends MvpPresenter<IPostListView> {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void attachView(IPostListView view) {
+        super.attachView(view);
+        view.setPostList(mPosts);
     }
 }
