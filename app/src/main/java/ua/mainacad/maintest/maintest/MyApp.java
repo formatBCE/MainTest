@@ -1,11 +1,13 @@
 package ua.mainacad.maintest.maintest;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ua.mainacad.maintest.maintest.api.Api;
+import ua.mainacad.maintest.maintest.database.AppDatabase;
 import ua.mainacad.maintest.maintest.database.DbHelper;
 
 public class MyApp extends Application {
@@ -16,8 +18,11 @@ public class MyApp extends Application {
         return instance;
     }
 
+
     private Api.Get api;
-    private DbHelper database;
+    private DbHelper sqlDb;
+    private AppDatabase roomDb;
+
 
     @Override
     public void onCreate() {
@@ -30,7 +35,8 @@ public class MyApp extends Application {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build().create(Api.Get.class);
-        database = new DbHelper(this);
+        sqlDb = new DbHelper(this);
+        roomDb = Room.databaseBuilder(this, AppDatabase.class, "database-name").build();
     }
 
     public Api.Get getApi() {
@@ -38,7 +44,11 @@ public class MyApp extends Application {
     }
 
 
-    public DbHelper getDatabase() {
-        return database;
+    public DbHelper getSqlDatabase() {
+        return sqlDb;
+    }
+
+    public AppDatabase getRoomDatabase() {
+        return roomDb;
     }
 }
