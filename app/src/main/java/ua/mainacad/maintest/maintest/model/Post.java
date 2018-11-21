@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
 @Entity(tableName = "post_table")
 public class Post {
     @SerializedName("userId")
-    private Integer userId;
+    private int userId;
 
     @SerializedName("id")
     @PrimaryKey
-    private Integer id;
+    private int id;
 
     @SerializedName("title")
     private String title;
@@ -19,7 +19,7 @@ public class Post {
     @SerializedName("body")
     private String body;
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
@@ -27,7 +27,7 @@ public class Post {
         this.userId = userId;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
