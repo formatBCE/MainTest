@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface IUsersApi {
 
-    @GET("/users")
-    Call<List<User>> getUsers();
+
 
 }

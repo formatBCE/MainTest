@@ -6,10 +6,9 @@ import com.arellomobile.mvp.MvpPresenter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import ua.mainacad.maintest.maintest.MyApp;
-import ua.mainacad.maintest.maintest.api.IPostsApi;
 import ua.mainacad.maintest.maintest.model.Post;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +16,8 @@ import java.util.List;
 public class PostsListPresenter extends MvpPresenter<IPostListView> {
     private List<Post> mPosts = new ArrayList<>();
 
-    public PostsListPresenter() {
-        Retrofit retrofit = MyApp.get().getRetrofit();
-        final Call<List<Post>> posts = retrofit.create(IPostsApi.class).getPosts();
+    PostsListPresenter() {
+        final Call<List<Post>> posts = MyApp.get().getApi().getPosts();
         posts.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {

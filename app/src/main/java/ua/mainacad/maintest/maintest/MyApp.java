@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import ua.mainacad.maintest.maintest.api.Api;
 
 public class MyApp extends Application {
 
@@ -14,7 +15,7 @@ public class MyApp extends Application {
         return instance;
     }
 
-    private Retrofit mRetrofit;
+    private Api.Get api;
 
     @Override
     public void onCreate() {
@@ -23,14 +24,14 @@ public class MyApp extends Application {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
-        mRetrofit = new Retrofit.Builder()
+        api = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
+                .build().create(Api.Get.class);
     }
 
-    public Retrofit getRetrofit() {
-        return mRetrofit;
+    public Api.Get getApi() {
+        return api;
     }
 
 
