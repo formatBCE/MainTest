@@ -2,16 +2,20 @@ package ua.mainacad.maintest.maintest.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Photo
-{
+public class Photo {
+
     @SerializedName("albumId")
     private int albumId;
+
     @SerializedName("id")
     private int id;
+
     @SerializedName("title")
     private String title;
+
     @SerializedName("url")
     private String url;
+
     @SerializedName("thumbnailUrl")
     private String thumbnailUrl;
 

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ua.mainacad.maintest.maintest.api.Api;
+import ua.mainacad.maintest.maintest.database.DbHelper;
 
 public class MyApp extends Application {
 
@@ -16,6 +17,7 @@ public class MyApp extends Application {
     }
 
     private Api.Get api;
+    private DbHelper database;
 
     @Override
     public void onCreate() {
@@ -28,6 +30,7 @@ public class MyApp extends Application {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build().create(Api.Get.class);
+        database = new DbHelper(this);
     }
 
     public Api.Get getApi() {
@@ -35,4 +38,7 @@ public class MyApp extends Application {
     }
 
 
+    public DbHelper getDatabase() {
+        return database;
+    }
 }
