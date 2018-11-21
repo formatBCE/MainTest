@@ -1,12 +1,16 @@
 package ua.mainacad.maintest.maintest.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "post_table")
 public class Post {
     @SerializedName("userId")
     private Integer userId;
 
     @SerializedName("id")
+    @PrimaryKey
     private Integer id;
 
     @SerializedName("title")
