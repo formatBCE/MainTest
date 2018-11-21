@@ -2,6 +2,7 @@ package ua.mainacad.maintest.maintest.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
 public class User {
 
     @SerializedName("id")
