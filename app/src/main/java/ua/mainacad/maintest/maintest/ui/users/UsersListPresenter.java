@@ -6,9 +6,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import ua.mainacad.maintest.maintest.MyApp;
-import ua.mainacad.maintest.maintest.api.IUsersApi;
 import ua.mainacad.maintest.maintest.model.User;
 
 import java.util.ArrayList;
@@ -20,9 +18,8 @@ public class UsersListPresenter extends MvpPresenter<IUserListView> {
 
     private List<User> mUsers = new ArrayList<>();
 
-    public UsersListPresenter() {
-        Retrofit retrofit = MyApp.get().getRetrofit();
-        final Call<List<User>> users = retrofit.create(IUsersApi.class).getUsers();
+    UsersListPresenter() {
+        final Call<List<User>> users = MyApp.get().getApi().getUsers();
         users.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(
