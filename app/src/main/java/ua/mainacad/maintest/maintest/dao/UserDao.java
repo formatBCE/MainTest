@@ -1,17 +1,20 @@
 package ua.mainacad.maintest.maintest.dao;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
+import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.*;
 import ua.mainacad.maintest.maintest.model.User;
 
 import java.util.List;
 
 @Dao
 public interface UserDao {
-    @Insert
-    void insert(User user);
+
+    @Update
+    int updateAll(List<User> objects);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertAll(List<User> posts);
 
     @Query("SELECT * from user_table ORDER BY id ASC")
-    List<User> getAllUsers();
+    LiveData<List<User>> getAll();
 }

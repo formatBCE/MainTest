@@ -1,49 +1,37 @@
 package ua.mainacad.maintest.maintest.ui.users;
 
+import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import ua.mainacad.maintest.maintest.MyApp;
+import ua.mainacad.maintest.maintest.IMyMvpView;
+import ua.mainacad.maintest.maintest.MyPresenter;
+import ua.mainacad.maintest.maintest.dao.UserDao;
 import ua.mainacad.maintest.maintest.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @InjectViewState
-public class UsersListPresenter extends MvpPresenter<IUserListView> {
+public class UsersListPresenter extends MyPresenter<User, IMyMvpView<User>> {
 
-
-    private List<User> mUsers = new ArrayList<>();
-
-    UsersListPresenter() {
-        final Call<List<User>> users = MyApp.get().getApi().getUsers();
-        users.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(
-                    @NonNull Call<List<User>> call,
-                    @NonNull Response<List<User>> response) {
-                if (response.body() != null) {
-                    mUsers.clear();
-                    mUsers.addAll(response.body());
-                    getViewState().setUserList(mUsers);
-                }
-            }
-
-            @Override
-            public void onFailure(
-                    @NonNull Call<List<User>> call,
-                    @NonNull Throwable t) {
-                t.printStackTrace();
-            }
-        });
+    @NonNull
+    @Override
+    protected Call<List<User>> getApiCall() {
+        return api().getUsers();
     }
 
     @Override
-    public void attachView(IUserListView view) {
-        super.attachView(view);
-        view.setUserList(mUsers);
+    protected void updateDb(@NonNull List<User> objects) {
+        final UserDao userDao = db().userDao();
+        final int rows = userDao.updateAll(objects);
+        if (rows < objects.size()) {
+            userDao.insertAll(objects);
+        }
+    }
+
+    @NonNull
+    @Override
+    protected LiveData<List<User>> getAll() {
+        return db().userDao().getAll();
     }
 }

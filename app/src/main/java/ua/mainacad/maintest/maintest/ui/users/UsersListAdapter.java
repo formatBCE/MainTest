@@ -36,7 +36,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         User user = data.get(position);
         viewHolder.userName.setText(user.getName());
-        viewHolder.companyName.setText(user.getCompany().getName());
+        //viewHolder.companyName.setText(user.getCompany().getName());
     }
 
     public void setUsers(List<User> users) {

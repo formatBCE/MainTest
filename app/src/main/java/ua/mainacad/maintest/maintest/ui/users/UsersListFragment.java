@@ -10,12 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import ua.mainacad.maintest.maintest.IMyMvpView;
 import ua.mainacad.maintest.maintest.R;
 import ua.mainacad.maintest.maintest.model.User;
 
 import java.util.List;
 
-public class UsersListFragment extends MvpAppCompatFragment implements IUserListView {
+public class UsersListFragment extends MvpAppCompatFragment implements IMyMvpView<User> {
 
     @InjectPresenter
     UsersListPresenter mPresenter;
@@ -38,7 +39,7 @@ public class UsersListFragment extends MvpAppCompatFragment implements IUserList
     }
 
     @Override
-    public void setUserList(List<User> users) {
+    public void updateWith(List<User> users) {
         mAdapter.setUsers(users);
     }
 

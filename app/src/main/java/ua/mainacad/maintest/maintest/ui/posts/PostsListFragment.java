@@ -10,14 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import ua.mainacad.maintest.maintest.IMyMvpView;
 import ua.mainacad.maintest.maintest.R;
 import ua.mainacad.maintest.maintest.model.Post;
-import ua.mainacad.maintest.maintest.ui.users.UsersListAdapter;
-import ua.mainacad.maintest.maintest.ui.users.UsersListPresenter;
 
 import java.util.List;
 
-public class PostsListFragment extends MvpAppCompatFragment implements IPostListView {
+public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpView<Post> {
     @InjectPresenter
     PostsListPresenter mPresenter;
     private PostsListAdapter mAdapter;
@@ -36,7 +35,7 @@ public class PostsListFragment extends MvpAppCompatFragment implements IPostList
     }
 
     @Override
-    public void setPostList(List<Post> posts) {
+    public void updateWith(List<Post> posts) {
         mAdapter.setPosts(posts);
     }
 }
