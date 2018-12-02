@@ -1,6 +1,8 @@
 package ua.mainacad.maintest.maintest.model;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
@@ -29,8 +31,9 @@ public class User {
     @SerializedName("website")
     private String website;
 
-    /*@SerializedName("company")
-    private Company company;*/
+    @SerializedName("company")
+    @Embedded(prefix = "company_")
+    private Company company;
 
     public int getId() {
         return id;
@@ -88,12 +91,12 @@ public class User {
         this.website = website;
     }
 
-    /*public Company getCompany() {
+    public Company getCompany() {
         return company;
     }
 
     public void setCompany(Company company) {
         this.company = company;
-    }*/
+    }
 
 }

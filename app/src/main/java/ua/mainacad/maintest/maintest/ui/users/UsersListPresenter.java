@@ -2,6 +2,7 @@ package ua.mainacad.maintest.maintest.ui.users;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import com.arellomobile.mvp.InjectViewState;
 import retrofit2.Call;
 import ua.mainacad.maintest.maintest.IMyMvpView;
@@ -22,6 +23,9 @@ public class UsersListPresenter extends MyPresenter<User, IMyMvpView<User>> {
 
     @Override
     protected void updateDb(@NonNull List<User> objects) {
+        for(User user : objects) {
+            Log.d("UserDebug", user.getName() + ", company: " + user.getCompany().getName());
+        }
         final UserDao userDao = db().userDao();
         final int rows = userDao.updateAll(objects);
         if (rows < objects.size()) {

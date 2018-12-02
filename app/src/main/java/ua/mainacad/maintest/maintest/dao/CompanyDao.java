@@ -8,11 +8,11 @@ import ua.mainacad.maintest.maintest.model.Post;
 
 import java.util.List;
 
-@Dao
+//@Dao
 public interface CompanyDao {
-    @Insert
-    void insert(Company company);
-
-    @Query("SELECT * from company_table WHERE id = :id LIMIT 1")
-    List<Post> getCompany(int id);
+//    @Insert
+//    void insert(Company company);
+//
+//    @Query("SELECT * from company_table WHERE id = :id LIMIT 1")
+//    List<Post> getCompany(int id);
 }
