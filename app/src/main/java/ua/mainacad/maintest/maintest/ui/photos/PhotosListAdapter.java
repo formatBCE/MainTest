@@ -37,7 +37,7 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Vi
         return mPhotos.size();
     }
 
-    public void setPhotos(List<Photo> photos) {
+    public void setPhotos(@NonNull List<Photo> photos) {
         mPhotos.clear();
         mPhotos.addAll(photos);
         notifyDataSetChanged();
