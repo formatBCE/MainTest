@@ -31,6 +31,11 @@ public class UsersListPresenter extends MyPresenter<User, IMyMvpView<User>> {
                             user.getName(),
                             user.getCompany().getName(),
                             user.getAddress().getCity()));
+
+            Log.d("UserDebug",
+                    String.format("lat: %s, lon: %s",
+                            user.getAddress().getGeo().getLatitude(),
+                            user.getAddress().getGeo().getLongitude()));
         }
         final UserDao userDao = db().userDao();
         final int rows = userDao.updateAll(objects);

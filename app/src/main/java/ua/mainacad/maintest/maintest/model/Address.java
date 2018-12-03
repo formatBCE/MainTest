@@ -20,9 +20,9 @@ public class Address {
     @SerializedName("zipcode")
     private String zipcode;
 
-//    @SerializedName("geo")
-//    @Embedded(prefix = "geo_")
-//    private Geo geo;
+    @SerializedName("geo")
+    @Embedded(prefix = "geo_")
+    private Geo geo;
 
     public String getStreet() {
         return street;
@@ -56,12 +56,12 @@ public class Address {
         this.zipcode = zipcode;
     }
 
-//    public Geo getGeo() {
-//        return geo;
-//    }
-//
-//    public void setGeo(Geo geo) {
-//        this.geo = geo;
-//    }
+    public Geo getGeo() {
+        return geo;
+    }
+
+    public void setGeo(Geo geo) {
+        this.geo = geo;
+    }
 
 }
