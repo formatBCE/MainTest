@@ -3,7 +3,6 @@ package ua.mainacad.maintest.maintest.dao;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.*;
 import ua.mainacad.maintest.maintest.model.Post;
-
 import java.util.List;
 
 @Dao

@@ -1,14 +1,12 @@
 package ua.mainacad.maintest.maintest.model;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "address_table")
+//@Entity(tableName = "address_table")
 public class Address {
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
 
     @SerializedName("street")
     private String street;
@@ -22,16 +20,9 @@ public class Address {
     @SerializedName("zipcode")
     private String zipcode;
 
-    @SerializedName("geo")
-    private Geo geo;
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    @SerializedName("geo")
+//    @Embedded(prefix = "geo_")
+//    private Geo geo;
 
     public String getStreet() {
         return street;
@@ -65,12 +56,12 @@ public class Address {
         this.zipcode = zipcode;
     }
 
-    public Geo getGeo() {
-        return geo;
-    }
-
-    public void setGeo(Geo geo) {
-        this.geo = geo;
-    }
+//    public Geo getGeo() {
+//        return geo;
+//    }
+//
+//    public void setGeo(Geo geo) {
+//        this.geo = geo;
+//    }
 
 }

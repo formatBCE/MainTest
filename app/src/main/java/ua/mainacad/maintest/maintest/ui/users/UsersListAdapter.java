@@ -37,6 +37,18 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         User user = data.get(position);
         viewHolder.userName.setText(user.getName());
         viewHolder.companyName.setText(user.getCompany().getName());
+        viewHolder.userAddress.setText(
+                String.format("%s %s, %s %s",
+                        user.getAddress().getZipcode(),
+                        user.getAddress().getCity(),
+                        user.getAddress().getStreet(),
+                        user.getAddress().getSuite())
+        );
+//        viewHolder.addressGeo.setText(
+//                String.format("Latitude %s, Longitude %s",
+//                        user.getAddress(),
+//                        user.getAddress().getSuite())
+//        );
     }
 
     public void setUsers(List<User> users) {
@@ -49,11 +61,16 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
 
         private final TextView userName;
         private final TextView companyName;
+        private final TextView userAddress;
+        private final TextView addressGeo;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.tv_user_name);
             companyName = itemView.findViewById(R.id.tv_user_company);
+            userAddress = itemView.findViewById(R.id.tv_user_address);
+            addressGeo= itemView.findViewById(R.id.tv_user_address_geo);
         }
     }
 }
