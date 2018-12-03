@@ -44,11 +44,11 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
                         user.getAddress().getStreet(),
                         user.getAddress().getSuite())
         );
-//        viewHolder.addressGeo.setText(
-//                String.format("Latitude %s, Longitude %s",
-//                        user.getAddress(),
-//                        user.getAddress().getSuite())
-//        );
+        viewHolder.addressGeo.setText(
+                String.format("Lat: %s, Lon: %s",
+                        user.getAddress().getGeo().getLatitude(),
+                        user.getAddress().getGeo().getLongitude())
+        );
     }
 
     public void setUsers(List<User> users) {
