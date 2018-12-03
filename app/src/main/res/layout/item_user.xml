@@ -21,4 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/tv_user_address"
+        tools:text="Address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_user_address_geo"
+        tools:text="Geo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

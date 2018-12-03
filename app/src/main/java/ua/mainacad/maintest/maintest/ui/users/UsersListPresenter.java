@@ -2,7 +2,10 @@ package ua.mainacad.maintest.maintest.ui.users;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.arellomobile.mvp.InjectViewState;
+
 import retrofit2.Call;
 import ua.mainacad.maintest.maintest.IMyMvpView;
 import ua.mainacad.maintest.maintest.MyPresenter;
@@ -22,6 +25,18 @@ public class UsersListPresenter extends MyPresenter<User, IMyMvpView<User>> {
 
     @Override
     protected void updateDb(@NonNull List<User> objects) {
+        for (User user : objects) {
+            Log.d("UserDebug",
+                    String.format("User name: %s, company: %s, city: %s",
+                            user.getName(),
+                            user.getCompany().getName(),
+                            user.getAddress().getCity()));
+
+            Log.d("UserDebug",
+                    String.format("lat: %s, lon: %s",
+                            user.getAddress().getGeo().getLatitude(),
+                            user.getAddress().getGeo().getLongitude()));
+        }
         final UserDao userDao = db().userDao();
         final int rows = userDao.updateAll(objects);
         if (rows < objects.size()) {
