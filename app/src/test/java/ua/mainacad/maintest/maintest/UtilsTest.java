@@ -44,16 +44,6 @@ public class UtilsTest {
     }
 
     @Test
-    public void isEmailValid_WhenInputHasWrongDomain() {
-        // Arrange
-        String email = "user@google.com";
-        // Act
-        boolean isValid = Utils.isEmailValid(email);
-        // Assert
-        assertFalse(isValid);
-    }
-
-    @Test
     public void isEmailValid_WhenInputIsCorrect() {
         // Arrange
         String email = "user@mydomain.com";

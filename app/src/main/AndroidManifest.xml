@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".ui.LoginActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.RegisterEmailActivity"/>
+        <activity android:name=".ui.LoginPhoneActivity"/>
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
 package ua.mainacad.maintest.maintest.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.google.firebase.auth.FirebaseAuth;
 import ua.mainacad.maintest.maintest.R;
 import ua.mainacad.maintest.maintest.ui.photos.PhotoListFragment;
 import ua.mainacad.maintest.maintest.ui.posts.PostsListFragment;
@@ -22,6 +25,7 @@ import ua.mainacad.maintest.maintest.ui.users.UsersListFragment;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
+    private static final int REQUEST_LOGIN = 21;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        setFragment(new UsersListFragment());
+        setupInitialScreen();
+    }
+
+    private void setupInitialScreen() {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            setFragment(new UsersListFragment());
+        } else {
+            login();
+        }
+    }
+
+    private void login() {
+        startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_LOGIN) {
+            if (resultCode == RESULT_OK) {
+                setupInitialScreen();
+            } else if (resultCode == RESULT_CANCELED) {
+                finish();
+            }
+        }
     }
 
     @Override
@@ -100,6 +128,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            recreate();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

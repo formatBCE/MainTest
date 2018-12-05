@@ -2,7 +2,7 @@ package ua.mainacad.maintest.maintest;
 
 public class Utils {
 
-    static boolean isEmailValid(String email) {
+    public static boolean isEmailValid(String email) {
         if (email == null) {
             throw new IllegalArgumentException("Email cannot be null");
         }
@@ -12,10 +12,7 @@ public class Utils {
         if (!email.contains("@")) {
             return false;
         }
-        if (email.indexOf("@") != email.lastIndexOf("@")) {
-            return false;
-        }
-        return "mydomain.com".equals(email.substring(email.indexOf("@") + 1));
+        return email.indexOf("@") == email.lastIndexOf("@");
     }
 
 }
