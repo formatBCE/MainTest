@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ua.mainacad.maintest.maintest.api.Api;
 import ua.mainacad.maintest.maintest.database.AppDatabase;
@@ -34,6 +35,7 @@ public class MyApp extends Application {
         api = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build().create(Api.Get.class);
         sqlDb = new DbHelper(this);
         roomDb = Room.databaseBuilder(this, AppDatabase.class, "database-name").build();

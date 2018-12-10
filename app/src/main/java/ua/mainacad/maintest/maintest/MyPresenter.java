@@ -8,9 +8,6 @@ import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import ua.mainacad.maintest.maintest.api.Api;
 import ua.mainacad.maintest.maintest.database.AppDatabase;
 
@@ -22,7 +19,7 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private final List<O> mValues = new ArrayList<>();
-    private final Call<List<O>> apiCall;
+    private final Single<List<O>> apiCall;
     private final LiveData<List<O>> liveData;
     private final Observer<List<O>> liveDataObserver;
 
@@ -34,7 +31,7 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
     }
 
     @NonNull
-    protected abstract Call<List<O>> getApiCall();
+    protected abstract Single<List<O>> getApiCall();
 
     protected abstract void updateDb(@NonNull List<O> objects);
 
@@ -43,25 +40,16 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
 
     private void init() {
         liveData.observeForever(liveDataObserver);
-        apiCall.enqueue(new Callback<List<O>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<O>> call, @NonNull Response<List<O>> response) {
-                final List<O> objects = response.body();
-                if (objects != null) {
-                    rx(Single.<Boolean>create(emitter -> {
-                        updateDb(objects);
-                        emitter.onSuccess(true);
-                    })
-                            .subscribeOn(Schedulers.io())
-                            .subscribe());
-                }
+        rx(apiCall.subscribe(objects -> {
+            if (objects != null) {
+                rx(Single.<Boolean>create(emitter -> {
+                    updateDb(objects);
+                    emitter.onSuccess(true);
+                })
+                        .subscribeOn(Schedulers.io())
+                        .subscribe());
             }
-
-            @Override
-            public void onFailure(@NonNull Call<List<O>> call, @NonNull Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        }, Throwable::printStackTrace));
     }
 
     @Override

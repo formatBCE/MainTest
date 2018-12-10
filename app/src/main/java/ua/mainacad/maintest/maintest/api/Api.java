@@ -1,6 +1,6 @@
 package ua.mainacad.maintest.maintest.api;
 
-import retrofit2.Call;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import ua.mainacad.maintest.maintest.model.Photo;
 import ua.mainacad.maintest.maintest.model.Post;
@@ -13,12 +13,12 @@ public interface Api {
     interface Get {
 
         @GET("/photos")
-        Call<List<Photo>> getPhotos();
+        Single<List<Photo>> getPhotos();
 
         @GET("/posts")
-        Call<List<Post>> getPosts();
+        Single<List<Post>> getPosts();
 
         @GET("/users")
-        Call<List<User>> getUsers();
+        Single<List<User>> getUsers();
     }
 }

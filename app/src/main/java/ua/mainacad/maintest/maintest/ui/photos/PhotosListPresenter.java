@@ -1,11 +1,8 @@
 package ua.mainacad.maintest.maintest.ui.photos;
 
-import android.support.annotation.NonNull;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Single;
 import ua.mainacad.maintest.maintest.MyApp;
 import ua.mainacad.maintest.maintest.model.Photo;
 
@@ -18,20 +15,12 @@ public class PhotosListPresenter extends MvpPresenter<IPhotoListView> {
     private ArrayList<Photo> mPhotos = new ArrayList<>();
 
     PhotosListPresenter() {
-        Call<List<Photo>> photos = MyApp.get().getApi().getPhotos();
-        photos.enqueue(new Callback<List<Photo>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Photo>> call, @NonNull Response<List<Photo>> response) {
-                if (response.body() != null) {
-                    mPhotos.clear();
-                    mPhotos.addAll(response.body());
-                    getViewState().setPhotos(mPhotos);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Photo>> call, @NonNull Throwable t) {
-
+        Single<List<Photo>> photos = MyApp.get().getApi().getPhotos();
+        photos.subscribe(photos1 -> {
+            if (photos1 != null && !photos1.isEmpty()) {
+                mPhotos.clear();
+                mPhotos.addAll(photos1);
+                getViewState().setPhotos(mPhotos);
             }
         });
     }

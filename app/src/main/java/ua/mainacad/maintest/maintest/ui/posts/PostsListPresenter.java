@@ -3,7 +3,7 @@ package ua.mainacad.maintest.maintest.ui.posts;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import com.arellomobile.mvp.InjectViewState;
-import retrofit2.Call;
+import io.reactivex.Single;
 import ua.mainacad.maintest.maintest.IMyMvpView;
 import ua.mainacad.maintest.maintest.MyPresenter;
 import ua.mainacad.maintest.maintest.dao.PostDao;
@@ -16,7 +16,7 @@ public class PostsListPresenter extends MyPresenter<Post, IMyMvpView<Post>> {
 
     @NonNull
     @Override
-    protected Call<List<Post>> getApiCall() {
+    protected Single<List<Post>> getApiCall() {
         return api().getPosts();
     }
 
