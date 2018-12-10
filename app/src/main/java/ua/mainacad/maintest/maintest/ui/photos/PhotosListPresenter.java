@@ -3,6 +3,8 @@ package ua.mainacad.maintest.maintest.ui.photos;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ua.mainacad.maintest.maintest.MyApp;
 import ua.mainacad.maintest.maintest.model.Photo;
 
@@ -16,13 +18,18 @@ public class PhotosListPresenter extends MvpPresenter<IPhotoListView> {
 
     PhotosListPresenter() {
         Single<List<Photo>> photos = MyApp.get().getApi().getAllPhotos();
-        photos.subscribe(photos1 -> {
-            if (photos1 != null && !photos1.isEmpty()) {
-                mPhotos.clear();
-                mPhotos.addAll(photos1);
-                getViewState().setPhotos(mPhotos);
-            }
-        });
+        photos
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                photos1 -> {
+                    if (photos1 != null && !photos1.isEmpty()) {
+                        mPhotos.clear();
+                        mPhotos.addAll(photos1);
+                        getViewState().setPhotos(mPhotos);
+                    }
+                },
+                Throwable::printStackTrace);
     }
 
     @Override
