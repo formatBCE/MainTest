@@ -1,4 +1,4 @@
-package ua.mainacad.maintest.maintest.ui;
+package ua.mainacad.maintest.maintest.ui.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -24,10 +24,17 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".ui.LoginActivity"
+                android:name=".ui.login.LoginActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.RegisterEmailActivity"/>
-        <activity android:name=".ui.LoginPhoneActivity"/>
+        <activity
+                android:name=".ui.login.RegisterEmailActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".ui.login.LoginPhoneActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".ui.posts.add.AddPostActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package ua.mainacad.maintest.maintest.ui.posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +14,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import ua.mainacad.maintest.maintest.IMyMvpView;
 import ua.mainacad.maintest.maintest.R;
 import ua.mainacad.maintest.maintest.model.Post;
+import ua.mainacad.maintest.maintest.ui.posts.add.AddPostActivity;
 
+import java.util.Collection;
 import java.util.List;
 
 public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpView<Post> {
@@ -24,18 +27,26 @@ public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpVie
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(
+        View v = inflater.inflate(
                 R.layout.fragment_posts_list,
                 container,
                 false);
+        RecyclerView recyclerView = v.findViewById(R.id.recycler);
         mAdapter = new PostsListAdapter();
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        return recyclerView;
+        v.findViewById(R.id.fab).setOnClickListener(fab ->
+                startActivity(new Intent(getActivity(), AddPostActivity.class)));
+        return v;
     }
 
     @Override
     public void updateWith(List<Post> posts) {
         mAdapter.setPosts(posts);
+    }
+
+    @Override
+    public void onUpdatedFromFirebase(Collection<Post> objects) {
+        mAdapter.onPostsUpdated(objects);
     }
 }

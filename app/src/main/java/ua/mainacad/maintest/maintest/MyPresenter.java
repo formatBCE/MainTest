@@ -40,16 +40,18 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
 
     private void init() {
         liveData.observeForever(liveDataObserver);
-        rx(apiCall.subscribe(objects -> {
-            if (objects != null) {
-                rx(Single.<Boolean>create(emitter -> {
-                    updateDb(objects);
-                    emitter.onSuccess(true);
-                })
-                        .subscribeOn(Schedulers.io())
-                        .subscribe());
-            }
-        }, Throwable::printStackTrace));
+        rx(apiCall
+                .subscribeOn(Schedulers.io())
+                .subscribe(objects -> {
+                    if (objects != null) {
+                        rx(Single.<Boolean>create(emitter -> {
+                            updateDb(objects);
+                            emitter.onSuccess(true);
+                        })
+                                .subscribeOn(Schedulers.io())
+                                .subscribe());
+                    }
+                }, Throwable::printStackTrace));
     }
 
     @Override
@@ -62,6 +64,10 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
         mValues.clear();
         mValues.addAll(objects);
         getViewState().updateWith(mValues);
+    }
+
+    protected void onObjectsUpdatedFromFirebase(@NonNull Collection<O> objects) {
+        getViewState().onUpdatedFromFirebase(objects);
     }
 
     private void rx(Disposable d) {
