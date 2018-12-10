@@ -13,12 +13,12 @@ public interface Api {
     interface Get {
 
         @GET("/photos")
-        Call<List<Photo>> getPhotos();
+        Call<List<Photo>> getAllPhotos();
 
         @GET("/posts")
-        Call<List<Post>> getPosts();
+        Call<List<Post>> getAllPosts();
 
         @GET("/users")
-        Call<List<User>> getUsers();
+        Call<List<User>> getAllUsers();
     }
 }

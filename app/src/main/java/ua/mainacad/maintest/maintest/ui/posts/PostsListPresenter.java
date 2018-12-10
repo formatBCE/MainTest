@@ -17,7 +17,7 @@ public class PostsListPresenter extends MyPresenter<Post, IMyMvpView<Post>> {
     @NonNull
     @Override
     protected Call<List<Post>> getApiCall() {
-        return api().getPosts();
+        return api().getAllPosts();
     }
 
     @Override

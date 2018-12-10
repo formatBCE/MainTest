@@ -18,7 +18,7 @@ public class PhotosListPresenter extends MvpPresenter<IPhotoListView> {
     private ArrayList<Photo> mPhotos = new ArrayList<>();
 
     PhotosListPresenter() {
-        Call<List<Photo>> photos = MyApp.get().getApi().getPhotos();
+        Call<List<Photo>> photos = MyApp.get().getApi().getAllPhotos();
         photos.enqueue(new Callback<List<Photo>>() {
             @Override
             public void onResponse(@NonNull Call<List<Photo>> call, @NonNull Response<List<Photo>> response) {

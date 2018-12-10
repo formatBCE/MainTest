@@ -20,7 +20,7 @@ public class UsersListPresenter extends MyPresenter<User, IMyMvpView<User>> {
     @NonNull
     @Override
     protected Call<List<User>> getApiCall() {
-        return api().getUsers();
+        return api().getAllUsers();
     }
 
     @Override
