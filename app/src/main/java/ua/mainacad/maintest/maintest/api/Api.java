@@ -11,14 +11,13 @@ import java.util.List;
 public interface Api {
 
     interface Get {
-
         @GET("/photos")
-        Single<List<Photo>> getPhotos();
+        Single<List<Photo>> getAllPhotos();
 
         @GET("/posts")
-        Single<List<Post>> getPosts();
+        Single<List<Post>> getAllPosts();
 
         @GET("/users")
-        Single<List<User>> getUsers();
+        Single<List<User>> getAllUsers();
     }
 }

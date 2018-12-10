@@ -15,7 +15,7 @@ public class PhotosListPresenter extends MvpPresenter<IPhotoListView> {
     private ArrayList<Photo> mPhotos = new ArrayList<>();
 
     PhotosListPresenter() {
-        Single<List<Photo>> photos = MyApp.get().getApi().getPhotos();
+        Single<List<Photo>> photos = MyApp.get().getApi().getAllPhotos();
         photos.subscribe(photos1 -> {
             if (photos1 != null && !photos1.isEmpty()) {
                 mPhotos.clear();
