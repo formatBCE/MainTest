@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import ua.mainacad.maintest.maintest.R;
 import ua.mainacad.maintest.maintest.ui.login.LoginActivity;
@@ -106,10 +107,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        View fab = findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+
         if (id == R.id.nav_users) {
             setFragment(new UsersListFragment());
         } else if (id == R.id.nav_posts) {
             setFragment(new PostsListFragment());
+            fab.setVisibility(View.VISIBLE);
 
         } else if (id == R.id.nav_gallery) {
             setFragment(new PhotoListFragment());

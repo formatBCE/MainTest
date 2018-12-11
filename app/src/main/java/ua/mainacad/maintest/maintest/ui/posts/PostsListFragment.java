@@ -36,7 +36,7 @@ public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpVie
         mAdapter = new PostsListAdapter();
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        v.findViewById(R.id.fab).setOnClickListener(fab ->
+        getActivity().findViewById(R.id.fab).setOnClickListener(fab ->
                 startActivity(new Intent(getActivity(), AddPostActivity.class)));
         return v;
     }
@@ -49,8 +49,8 @@ public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpVie
     @Override
     public void onUpdatedFromFirebase(Collection<Post> objects) {
         Toast.makeText(getContext(),
-                "Received " + objects.size() + " from Firebase db",
-                Toast.LENGTH_SHORT).show();
+                "Received " + objects.size() + " posts from Firebase db",
+                Toast.LENGTH_LONG).show();
         mAdapter.onPostsUpdated(objects);
     }
 }
