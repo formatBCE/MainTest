@@ -30,7 +30,8 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Post post = mData.get(position);
-        viewHolder.title.setText(post.getTitle());
+        String title = post.getId() + ": " + post.getTitle();
+        viewHolder.title.setText(title);
         viewHolder.body.setText(post.getBody());
         viewHolder.title.setTextColor(
                 ContextCompat.getColor(
