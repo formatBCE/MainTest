@@ -2,54 +2,26 @@ package ua.mainacad.maintest.maintest.ui.posts;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import com.arellomobile.mvp.InjectViewState;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.GenericTypeIndicator;
 import io.reactivex.Single;
 import ua.mainacad.maintest.maintest.IMyMvpView;
-import ua.mainacad.maintest.maintest.MyApp;
 import ua.mainacad.maintest.maintest.MyPresenter;
 import ua.mainacad.maintest.maintest.dao.PostDao;
 import ua.mainacad.maintest.maintest.model.Post;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @InjectViewState
 public class PostsListPresenter extends MyPresenter<Post, IMyMvpView<Post>> {
 
-    private DatabaseReference posts;
-
-    PostsListPresenter() {
-        posts = MyApp.get().getFirebaseDb().getReference("posts");
-        getFromFirebase();
-    }
-
-    private void getFromFirebase() {
-        posts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<Map<String, Post>> genericTypeIndicator =
-                        new GenericTypeIndicator<Map<String, Post>>() {
-                        };
-                Map<String, Post> value = dataSnapshot.getValue(genericTypeIndicator);
-//                Log.e("Posts", "Value is: " + value);
-                if (value != null && !value.isEmpty()) {
-                    List<Post> posts = new ArrayList<>(value.values());
-                    for (Post p : posts) {
-                        p.setFromFirebase(true);
-                    }
-                    //updateDb(posts);
-                    onObjectsUpdatedFromFirebase(posts);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Posts", "Failed to read value.", error.toException());
-            }
-        });
+    @NonNull
+    @Override
+    protected DatabaseReference getFirebaseReference() {
+        return firebase().getReference("posts");
     }
 
     @NonNull
@@ -58,20 +30,27 @@ public class PostsListPresenter extends MyPresenter<Post, IMyMvpView<Post>> {
         return api().getAllPosts();
     }
 
-    @Override
-    protected void updateDb(@NonNull List<Post> objects) {
-        final PostDao postDao = db().postDao();
-        Log.e("firebase", "updateAll triggered in " + this.getClass().getSimpleName());
-        final int rows = postDao.updateAll(objects);
-        if (rows < objects.size()) {
-            Log.e("firebase", "insertAll triggered in " + this.getClass().getSimpleName());
-            postDao.insertAll(objects);
-        }
-    }
 
     @NonNull
     @Override
-    protected LiveData<List<Post>> getAll() {
+    protected LiveData<List<Post>> getDatabaseSubscription() {
         return db().postDao().getAll();
+    }
+
+    @Override
+    protected Map<String, Post> parseFirebaseData(DataSnapshot dataSnapshot) {
+        GenericTypeIndicator<Map<String, Post>> genericTypeIndicator =
+                new GenericTypeIndicator<Map<String, Post>>() {
+                };
+        return dataSnapshot.getValue(genericTypeIndicator);
+    }
+
+    @Override
+    protected void updateDb(@NonNull List<Post> objects) {
+        final PostDao postDao = db().postDao();
+        final int rows = postDao.updateAll(objects);
+        if (rows < objects.size()) {
+            postDao.insertAll(objects);
+        }
     }
 }
