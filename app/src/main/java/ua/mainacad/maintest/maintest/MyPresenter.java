@@ -3,6 +3,7 @@ package ua.mainacad.maintest.maintest;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import com.arellomobile.mvp.MvpPresenter;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
@@ -40,11 +41,13 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
 
     private void init() {
         liveData.observeForever(liveDataObserver);
+//        Log.e("firebase", "init triggered in " + this.getClass().getSimpleName());
         rx(apiCall
                 .subscribeOn(Schedulers.io())
                 .subscribe(objects -> {
                     if (objects != null) {
                         rx(Single.<Boolean>create(emitter -> {
+                            Log.e("firebase", "RxJava Single from apiCall " + this.getClass().getSimpleName());
                             updateDb(objects);
                             emitter.onSuccess(true);
                         })
@@ -61,6 +64,7 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
     }
 
     private void updateModelAndView(@NonNull Collection<O> objects) {
+//        Log.e("firebase", "updateModelAndView triggered in " + this.getClass().getSimpleName());
         mValues.clear();
         mValues.addAll(objects);
         getViewState().updateWith(mValues);
@@ -76,6 +80,7 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
 
     @Override
     public void onDestroy() {
+//        Log.e("firebase", "onDestroy triggered in " + this.getClass().getSimpleName());
         compositeDisposable.dispose();
         liveData.removeObserver(liveDataObserver);
         super.onDestroy();

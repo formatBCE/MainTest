@@ -3,6 +3,7 @@ package ua.mainacad.maintest.maintest.ui.posts;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,8 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Post post = mData.get(position);
-        viewHolder.title.setText(post.getTitle());
+        String title = post.getId() + ": " + post.getTitle();
+        viewHolder.title.setText(title);
         viewHolder.body.setText(post.getBody());
         viewHolder.title.setTextColor(
                 ContextCompat.getColor(
@@ -49,12 +51,14 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.View
     }
 
     void setPosts(List<Post> posts) {
+//        Log.e("firebase", "setPosts triggered in " + this.getClass().getSimpleName());
         mData.clear();
         mData.addAll(posts);
         notifyDataSetChanged();
     }
 
     void onPostsUpdated(Collection<Post> newPosts) {
+        Log.e("firebase", "onPostUpdated triggered in " + this.getClass().getSimpleName());
         for (Post p : newPosts) {
             final int index = mData.indexOf(p);
             if (index >= 0) {
