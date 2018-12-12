@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpVie
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.e("firebase", "onCreateView triggered from " + this.getClass().getSimpleName());
         View v = inflater.inflate(
                 R.layout.fragment_posts_list,
                 container,
@@ -36,8 +40,13 @@ public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpVie
         mAdapter = new PostsListAdapter();
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        getActivity().findViewById(R.id.fab).setOnClickListener(fab ->
+
+        // Set FAB onClickListener
+        FragmentActivity activity = getActivity();
+        assert activity != null;
+        activity.findViewById(R.id.fab).setOnClickListener(fab ->
                 startActivity(new Intent(getActivity(), AddPostActivity.class)));
+
         return v;
     }
 
@@ -48,6 +57,7 @@ public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpVie
 
     @Override
     public void onUpdatedFromFirebase(Collection<Post> objects) {
+        Log.e("firebase", "Received " + objects.size());
         Toast.makeText(getContext(),
                 "Received " + objects.size() + " posts from Firebase db",
                 Toast.LENGTH_LONG).show();

@@ -3,6 +3,7 @@ package ua.mainacad.maintest.maintest;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import com.arellomobile.mvp.MvpPresenter;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
@@ -40,6 +41,7 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
 
     private void init() {
         liveData.observeForever(liveDataObserver);
+        Log.e("firebase", "LiveData observed from " + this.getClass().getSimpleName());
         rx(apiCall
                 .subscribeOn(Schedulers.io())
                 .subscribe(objects -> {
@@ -76,6 +78,7 @@ public abstract class MyPresenter<O, T extends IMyMvpView<O>> extends MvpPresent
 
     @Override
     public void onDestroy() {
+        Log.e("firebase", "onDestroy triggered from " + this.getClass().getSimpleName());
         compositeDisposable.dispose();
         liveData.removeObserver(liveDataObserver);
         super.onDestroy();

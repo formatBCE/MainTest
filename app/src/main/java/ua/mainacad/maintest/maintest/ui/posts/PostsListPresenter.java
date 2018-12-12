@@ -34,7 +34,7 @@ public class PostsListPresenter extends MyPresenter<Post, IMyMvpView<Post>> {
                         new GenericTypeIndicator<Map<String, Post>>() {
                         };
                 Map<String, Post> value = dataSnapshot.getValue(genericTypeIndicator);
-                Log.e("Posts", "Value is: " + value);
+//                Log.e("Posts", "Value is: " + value);
                 if (value != null && !value.isEmpty()) {
                     List<Post> posts = new ArrayList<>(value.values());
                     for (Post p : posts) {

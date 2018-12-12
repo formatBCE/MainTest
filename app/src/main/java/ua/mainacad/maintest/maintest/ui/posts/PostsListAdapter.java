@@ -3,6 +3,7 @@ package ua.mainacad.maintest.maintest.ui.posts;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +50,14 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.View
         return mData.size();
     }
 
-    void setPosts(List<Post> posts) {
+    void setPosts(List<Post> posts) {Log.e("firebase", "setPosts triggered from " + this.getClass().getSimpleName());
         mData.clear();
         mData.addAll(posts);
         notifyDataSetChanged();
     }
 
     void onPostsUpdated(Collection<Post> newPosts) {
+        Log.e("firebase", "onPostUpdated triggered from " + this.getClass().getSimpleName());
         for (Post p : newPosts) {
             final int index = mData.indexOf(p);
             if (index >= 0) {
