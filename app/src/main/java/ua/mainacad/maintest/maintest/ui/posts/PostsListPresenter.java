@@ -61,8 +61,10 @@ public class PostsListPresenter extends MyPresenter<Post, IMyMvpView<Post>> {
     @Override
     protected void updateDb(@NonNull List<Post> objects) {
         final PostDao postDao = db().postDao();
+        Log.e("firebase", "updateAll triggered in " + this.getClass().getSimpleName());
         final int rows = postDao.updateAll(objects);
         if (rows < objects.size()) {
+            Log.e("firebase", "insertAll triggered in " + this.getClass().getSimpleName());
             postDao.insertAll(objects);
         }
     }

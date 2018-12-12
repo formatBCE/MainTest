@@ -31,7 +31,7 @@ public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpVie
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e("firebase", "onCreateView triggered from " + this.getClass().getSimpleName());
+//        Log.e("firebase", "onCreateView triggered in " + this.getClass().getSimpleName());
         View v = inflater.inflate(
                 R.layout.fragment_posts_list,
                 container,
@@ -52,12 +52,13 @@ public class PostsListFragment extends MvpAppCompatFragment implements IMyMvpVie
 
     @Override
     public void updateWith(List<Post> posts) {
+        Log.e("firebase", "updateWith " + posts.size() + " posts triggered in " + this.getClass().getSimpleName());
         mAdapter.setPosts(posts);
     }
 
     @Override
     public void onUpdatedFromFirebase(Collection<Post> objects) {
-        Log.e("firebase", "Received " + objects.size());
+//        Log.e("firebase", "onUpdatedFromFirebase Received " + objects.size() + " posts");
         Toast.makeText(getContext(),
                 "Received " + objects.size() + " posts from Firebase db",
                 Toast.LENGTH_LONG).show();

@@ -50,14 +50,15 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.View
         return mData.size();
     }
 
-    void setPosts(List<Post> posts) {Log.e("firebase", "setPosts triggered from " + this.getClass().getSimpleName());
+    void setPosts(List<Post> posts) {
+//        Log.e("firebase", "setPosts triggered in " + this.getClass().getSimpleName());
         mData.clear();
         mData.addAll(posts);
         notifyDataSetChanged();
     }
 
     void onPostsUpdated(Collection<Post> newPosts) {
-        Log.e("firebase", "onPostUpdated triggered from " + this.getClass().getSimpleName());
+        Log.e("firebase", "onPostUpdated triggered in " + this.getClass().getSimpleName());
         for (Post p : newPosts) {
             final int index = mData.indexOf(p);
             if (index >= 0) {
