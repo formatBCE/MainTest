@@ -24,6 +24,7 @@ import ua.mainacad.maintest.maintest.ui.login.LoginActivity;
 import ua.mainacad.maintest.maintest.ui.photos.PhotoListFragment;
 import ua.mainacad.maintest.maintest.ui.posts.PostsListFragment;
 import ua.mainacad.maintest.maintest.ui.users.UsersListFragment;
+import ua.mainacad.maintest.maintest.workers.MyWorkerManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -122,22 +123,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Toast.LENGTH_SHORT)
                         .show();
             }
+            final String tag = MyWorkerManager.scheduleJob();
             setFragment(new UsersListFragment());
-        } else if (id == R.id.nav_posts) {
+        } else if (id == R.id.nav_posts)
+
+        {
             setFragment(new PostsListFragment());
             fab.setVisibility(View.VISIBLE);
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_gallery)
+
+        {
             setFragment(new PhotoListFragment());
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_slideshow)
 
-        } else if (id == R.id.nav_manage) {
+        {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_manage)
 
-        } else if (id == R.id.nav_send) {
+        {
 
-        } else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_share)
+
+        {
+
+        } else if (id == R.id.nav_send)
+
+        {
+
+        } else if (id == R.id.nav_logout)
+
+        {
             FirebaseAuth.getInstance().signOut();
             recreate();
         }
