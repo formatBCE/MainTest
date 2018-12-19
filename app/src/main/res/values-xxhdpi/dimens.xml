@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="icon_size">60dp</dimen>
+    <integer name="columns_count">3</integer>
+</resources>
