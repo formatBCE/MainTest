@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="Login"
+            android:key="pref_key_login_settings">
+
+        <Preference
+                android:key="@string/pref_key_change_password"
+                android:title="Change Password"/>
+
+        <EditTextPreference
+                android:key="@string/pref_key_change_password_hint"
+                android:defaultValue="@string/default_hint"
+                android:title="Change Password Hint"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="Security"
+            android:key="pref_key_security_settings">
+
+        <SwitchPreference
+                android:defaultValue="@bool/auto_lock"
+                android:key="@string/pref_key_auto_lock"
+                android:title="Auto Lock"
+                android:summary="Always prompt password login when the app is inactive for a while"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="About"
+            android:key="pref_key_about_settings">
+
+        <Preference
+                android:key="@string/pref_key_upgrade"
+                android:title="Upgrade"
+                android:summary="Pro for peace of mind or be a Patron to support our work"/>
+
+        <Preference
+                android:key="@string/pref_key_rate"
+                android:title="❤ LuaPass"
+                android:summary="Rate LuaPass on Play Store"/>
+
+        <Preference
+                android:key="@string/pref_key_contact"
+                android:title="Feedback"
+                android:summary="Email us for question, suggestion or bug report"/>
+
+        <Preference
+                android:key="@string/pref_key_version"
+                android:title="Version"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

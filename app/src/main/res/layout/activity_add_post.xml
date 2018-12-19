@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_height="match_parent">
+
+    <EditText
+            android:inputType="textCapSentences"
+            android:layout_margin="8dp"
+            android:autofillHints="Title"
+            android:hint="Title"
+            android:id="@+id/et_title"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:layout_margin="8dp"
+            android:inputType="textCapSentences"
+            android:autofillHints="Body"
+            android:layout_weight="1"
+            android:hint="Body"
+            android:id="@+id/et_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
+    <Button
+            android:id="@+id/btn_add_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add post"/>
+
+</LinearLayout>

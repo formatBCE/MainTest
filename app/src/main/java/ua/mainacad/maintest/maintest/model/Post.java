@@ -3,7 +3,9 @@ package ua.mainacad.maintest.maintest.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import com.google.firebase.database.Exclude;
 import com.google.gson.annotations.SerializedName;
+import io.reactivex.annotations.Nullable;
 
 @Entity(tableName = "post_table")
 public class Post {
@@ -24,6 +26,9 @@ public class Post {
     @ColumnInfo(name = "body")
     @SerializedName("body")
     private String body;
+
+    @Exclude
+    private transient boolean isFromFirebase;
 
     public int getUserId() {
         return userId;
@@ -55,5 +60,26 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public boolean isFromFirebase() {
+        return isFromFirebase;
+    }
+
+    public void setFromFirebase(boolean fromFirebase) {
+        isFromFirebase = fromFirebase;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof Post)) {
+            return false;
+        }
+        return ((Post) obj).id == id;
     }
 }

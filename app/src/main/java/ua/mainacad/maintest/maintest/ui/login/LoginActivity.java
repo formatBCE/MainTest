@@ -1,10 +1,12 @@
-package ua.mainacad.maintest.maintest.ui;
+package ua.mainacad.maintest.maintest.ui.login;
 
+import android.arch.persistence.room.util.StringUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.AuthResult;
@@ -44,6 +46,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void tryLogin() {
+        String email = etEmail.getText().toString();
+        String pass = etPwd.getText().toString();
+
+        if(isEmptyLoginInput(email, pass)) {
+            Toast.makeText(
+                    LoginActivity.this,
+                    "Login and password can't be empty",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         FirebaseAuth.getInstance().signInWithEmailAndPassword(
                 etEmail.getText().toString(),
                 etPwd.getText().toString()
@@ -72,6 +84,10 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT)
                             .show());
         });
+    }
+
+    private boolean isEmptyLoginInput(String email, String pass) {
+        return TextUtils.isEmpty(email) || TextUtils.isEmpty(pass);
     }
 
     @Override

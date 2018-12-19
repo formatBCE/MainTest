@@ -14,6 +14,7 @@ import ua.mainacad.maintest.maintest.IMyMvpView;
 import ua.mainacad.maintest.maintest.R;
 import ua.mainacad.maintest.maintest.model.User;
 
+import java.util.Collection;
 import java.util.List;
 
 public class UsersListFragment extends MvpAppCompatFragment implements IMyMvpView<User> {
@@ -41,6 +42,11 @@ public class UsersListFragment extends MvpAppCompatFragment implements IMyMvpVie
     @Override
     public void updateWith(List<User> users) {
         mAdapter.setUsers(users);
+    }
+
+    @Override
+    public void onUpdatedFromFirebase(Collection<User> objects) {
+        // STUB do nothing
     }
 
 }

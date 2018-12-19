@@ -1,14 +1,18 @@
 package ua.mainacad.maintest.maintest.ui.posts;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ua.mainacad.maintest.maintest.R;
 import ua.mainacad.maintest.maintest.model.Post;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.ViewHolder> {
@@ -27,8 +31,18 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Post post = mData.get(position);
-        viewHolder.title.setText(post.getTitle());
+        String title = post.getId() + ": " + post.getTitle();
+        viewHolder.title.setText(title);
         viewHolder.body.setText(post.getBody());
+        viewHolder.title.setTextColor(
+                ContextCompat.getColor(
+                        viewHolder.title.getContext(),
+                        post.isFromFirebase()
+                                ? android.R.color.holo_green_dark
+                                : android.R.color.holo_red_dark
+
+                )
+        );
     }
 
     @Override
@@ -36,9 +50,24 @@ public class PostsListAdapter extends RecyclerView.Adapter<PostsListAdapter.View
         return mData.size();
     }
 
-    public void setPosts(List<Post> posts) {
+    void setPosts(List<Post> posts) {
+//        Log.e("firebase", "setPosts triggered in " + this.getClass().getSimpleName());
         mData.clear();
         mData.addAll(posts);
+        notifyDataSetChanged();
+    }
+
+    void onPostsUpdated(Collection<Post> newPosts) {
+        Log.e("firebase", "onPostUpdated triggered in " + this.getClass().getSimpleName());
+        for (Post p : newPosts) {
+            final int index = mData.indexOf(p);
+            if (index >= 0) {
+                mData.remove(index);
+                mData.add(index, p);
+            } else {
+                mData.add(p);
+            }
+        }
         notifyDataSetChanged();
     }
 

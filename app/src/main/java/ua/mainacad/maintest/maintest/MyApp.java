@@ -2,6 +2,7 @@ package ua.mainacad.maintest.maintest;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import retrofit2.Retrofit;
@@ -23,6 +24,7 @@ public class MyApp extends Application {
     private Api.Get api;
     private DbHelper sqlDb;
     private AppDatabase roomDb;
+    private FirebaseDatabase firebaseDb;
 
 
     @Override
@@ -38,7 +40,8 @@ public class MyApp extends Application {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build().create(Api.Get.class);
         sqlDb = new DbHelper(this);
-        roomDb = Room.databaseBuilder(this, AppDatabase.class, "database-name").build();
+        roomDb = Room.databaseBuilder(this, AppDatabase.class, "firebaseDb-name").build();
+        firebaseDb = FirebaseDatabase.getInstance();
     }
 
     public Api.Get getApi() {
@@ -50,7 +53,13 @@ public class MyApp extends Application {
         return sqlDb;
     }
 
+
+
     public AppDatabase getRoomDatabase() {
         return roomDb;
+    }
+
+    public FirebaseDatabase getFirebaseDb() {
+        return firebaseDb;
     }
 }
