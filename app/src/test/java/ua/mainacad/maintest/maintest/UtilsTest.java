@@ -1,6 +1,7 @@
 package ua.mainacad.maintest.maintest;
 
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.schedulers.TestScheduler;
 import org.junit.Test;
 import ua.mainacad.maintest.maintest.dao.PostDao;
 import ua.mainacad.maintest.maintest.database.AppDatabase;
@@ -62,7 +63,7 @@ public class UtilsTest {
     }
 
     @Test
-    public void testPostsList() {
+    public void testPostsListWithTrampoline() {
         // Arrange
         List<Post> data = new ArrayList<>();
         data.add(new Post());
@@ -73,6 +74,24 @@ public class UtilsTest {
         when(db.postDao()).thenReturn(postDao);
         // Act
         Utils.loadPostsFromDb(db, callback, Schedulers.trampoline(), Schedulers.trampoline());
+        // Assert
+        verify(callback).call(data);
+    }
+
+    @Test
+    public void testPostsListWithTestScheduler() {
+        // Arrange
+        List<Post> data = new ArrayList<>();
+        data.add(new Post());
+        ICallback<List<Post>> callback = mock(ICallback.class);
+        AppDatabase db = mock(AppDatabase.class);
+        PostDao postDao = mock(PostDao.class);
+        when(postDao.getAllSynchronously()).thenReturn(data);
+        when(db.postDao()).thenReturn(postDao);
+        // Act
+        final TestScheduler testScheduler = new TestScheduler();
+        Utils.loadPostsFromDb(db, callback, testScheduler, testScheduler);
+        testScheduler.triggerActions();
         // Assert
         verify(callback).call(data);
     }
