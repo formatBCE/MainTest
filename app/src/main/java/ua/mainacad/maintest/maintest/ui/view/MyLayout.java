@@ -1,15 +1,20 @@
 package ua.mainacad.maintest.maintest.ui.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import ua.mainacad.maintest.maintest.R;
 
 public class MyLayout extends ViewGroup {
 
-    private final int childShift = 40;
-    private int childWidth;
-    private int childHeight;
+    private static final int DEFAULT_SHIFT = 5;
+
+    private int childHorizontalShift = DEFAULT_SHIFT;
+    private int childVerticalShift = DEFAULT_SHIFT;
+    private int childFrameWidth;
+    private int childFrameHeight;
 
     public MyLayout(Context context) {
         super(context);
@@ -17,6 +22,10 @@ public class MyLayout extends ViewGroup {
 
     public MyLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MyLayout);
+        childHorizontalShift = typedArray.getDimensionPixelSize(R.styleable.MyLayout_horizontalShift, 5);
+        childVerticalShift = typedArray.getDimensionPixelSize(R.styleable.MyLayout_verticalShift, 5);
+        typedArray.recycle();
     }
 
     public MyLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -27,6 +36,46 @@ public class MyLayout extends ViewGroup {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    public void setChildShifts(
+            int childHorizontalShift,
+            int childVerticalShift) {
+        this.childHorizontalShift = childHorizontalShift;
+        this.childVerticalShift = childVerticalShift;
+        requestLayout();
+    }
+
+    public int getChildHorizontalShift() {
+        return childHorizontalShift;
+    }
+
+    public int getChildVerticalShift() {
+        return childVerticalShift;
+    }
+
+    @Override
+    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
+        return p instanceof MarginLayoutParams;
+    }
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    }
+
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new MarginLayoutParams(getContext(), attrs);
+    }
+
+    @Override
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        if (p instanceof MarginLayoutParams) {
+            return p;
+        }
+        return new MarginLayoutParams(p.width, p.height);
+    }
+
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -34,14 +83,15 @@ public class MyLayout extends ViewGroup {
         int height = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
         int visibleChildCount = 0;
         for (int i = 0; i < getChildCount(); i++) {
-            if (getChildAt(i).getVisibility() != GONE) {
+            final View child = getChildAt(i);
+            if (child.getVisibility() != GONE) {
                 visibleChildCount++;
             }
         }
-        childWidth = width - (childShift * (visibleChildCount - 1));
-        childHeight = height - (childShift * (visibleChildCount - 1));
-        final int widthSpec = MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY);
-        final int heightSpec = MeasureSpec.makeMeasureSpec(childHeight, MeasureSpec.EXACTLY);
+        childFrameWidth = width - (childHorizontalShift * (visibleChildCount - 1));
+        childFrameHeight = height - (childVerticalShift * (visibleChildCount - 1));
+        final int widthSpec = MeasureSpec.makeMeasureSpec(childFrameWidth, MeasureSpec.EXACTLY);
+        final int heightSpec = MeasureSpec.makeMeasureSpec(childFrameHeight, MeasureSpec.EXACTLY);
         measureChildren(widthSpec, heightSpec);
     }
 
@@ -49,16 +99,18 @@ public class MyLayout extends ViewGroup {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         int l = left + getPaddingLeft();
         int t = top + getPaddingTop();
-        int r = l + childWidth;
-        int b = top + childHeight;
         for (int i = 0; i < getChildCount(); i++) {
             final View child = getChildAt(i);
             if (child.getVisibility() != GONE) {
-                child.layout(l, t, r, b);
-                l += childShift;
-                t += childShift;
-                r += childShift;
-                b += childShift;
+                final MarginLayoutParams layoutParams = (MarginLayoutParams) child.getLayoutParams();
+                child.layout(
+                        l + layoutParams.leftMargin,
+                        t + layoutParams.topMargin,
+                        l + childFrameWidth - layoutParams.rightMargin,
+                        t + childFrameHeight - layoutParams.bottomMargin
+                );
+                l += childHorizontalShift;
+                t += childVerticalShift;
             }
         }
     }
