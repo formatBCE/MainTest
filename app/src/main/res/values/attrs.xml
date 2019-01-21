@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="MyView">
+        <attr name="startCircleDiameter" format="dimension"/>
+        <attr name="endCircleDiameter" format="dimension"/>
+    </declare-styleable>
     <declare-styleable name="MyLayout">
         <attr name="horizontalShift" format="dimension"/>
         <attr name="verticalShift" format="dimension"/>

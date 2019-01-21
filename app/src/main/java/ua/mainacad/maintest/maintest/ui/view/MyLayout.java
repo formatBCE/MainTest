@@ -23,8 +23,8 @@ public class MyLayout extends ViewGroup {
     public MyLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MyLayout);
-        childHorizontalShift = typedArray.getDimensionPixelSize(R.styleable.MyLayout_horizontalShift, 5);
-        childVerticalShift = typedArray.getDimensionPixelSize(R.styleable.MyLayout_verticalShift, 5);
+        childHorizontalShift = typedArray.getDimensionPixelSize(R.styleable.MyLayout_horizontalShift, DEFAULT_SHIFT);
+        childVerticalShift = typedArray.getDimensionPixelSize(R.styleable.MyLayout_verticalShift, DEFAULT_SHIFT);
         typedArray.recycle();
     }
 
