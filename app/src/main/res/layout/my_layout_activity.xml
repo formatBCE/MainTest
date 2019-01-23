@@ -6,25 +6,26 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
 
-    <ua.mainacad.maintest.maintest.ui.view.MyLayout
+    <LinearLayout
             android:id="@+id/my_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:horizontalShift="10dp"
-            app:verticalShift="5dp">
+            android:gravity="center">
 
-        <TextView
+        <ua.mainacad.maintest.maintest.ui.view.MyView
+                android:id="@+id/my_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:layout_margin="20dp"/>
+                app:startCircleDiameter="50dp"
+                app:endCircleDiameter="100dp"/>
 
-    </ua.mainacad.maintest.maintest.ui.view.MyLayout>
+
+    </LinearLayout>
     <Button
-            android:id="@+id/increase_shift"
+            android:id="@+id/switchColor"
             android:layout_width="match_parent"
-            android:text="Increase shift"
+            android:text="Red color"
             android:layout_height="wrap_content"/>
     <Button
             android:id="@+id/add_view"
