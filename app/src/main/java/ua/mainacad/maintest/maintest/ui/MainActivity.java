@@ -23,6 +23,7 @@ import ua.mainacad.maintest.maintest.R;
 import ua.mainacad.maintest.maintest.ui.login.LoginActivity;
 import ua.mainacad.maintest.maintest.ui.photos.PhotoListFragment;
 import ua.mainacad.maintest.maintest.ui.posts.PostsListFragment;
+import ua.mainacad.maintest.maintest.ui.purchase.PurchaseActivity;
 import ua.mainacad.maintest.maintest.ui.users.UsersListFragment;
 import ua.mainacad.maintest.maintest.workers.MyWorkerManager;
 
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_slideshow) {
             startActivity(new Intent(this, MyLayoutActivity.class));
         } else if (id == R.id.nav_manage) {
-
+            startActivity(new Intent(this, PurchaseActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
